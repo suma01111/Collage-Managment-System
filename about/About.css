@@ -1,0 +1,295 @@
+* {
+    margin: 0;
+    padding: 0;
+    /* box-sizing: border-box; */
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
+
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 60px;
+    height: auto;
+    margin-right: 15px;
+}
+
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 0px;
+}
+
+/* Background Image and Title */
+/* .background-image {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    /* background: url('your-background-image.jpg') center/cover no-repeat; */
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+} */ 
+
+
+
+/* Styling for h1 with class "title" */
+.section-heading {
+    background-image: url('../gallery/institue_img.jpeg'); /* Replace with the correct path to your image */
+    background-size:cover; /* Adjusts the image to cover the entire heading */
+    background-position: center; /* Centers the image */
+    color: white; /* Ensures text is visible on the background */
+    padding: 20px; 
+    text-align: center; /* Aligns text to the center */
+    border-radius: 10px; /* Optional: adds rounded corners */
+    object-fit: cover;
+    width: 100%;
+    height: 30em;
+}
+.section-heading img{
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+    mix-blend-mode:lighten;
+    filter: invert(1);
+
+}
+.section-heading h1 {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+   font-size: 60px;  /* Large heading */
+    font-family: 'Georgia', serif; /* Elegant serif font */
+    font-weight: bold; /* Bold text */
+    color: #ffffff; /* Dark color for the heading */
+    margin: 0;
+}
+
+.section-heading p {
+    font-size: 18px;
+    font-family: 'Arial', sans-serif;
+    color: #ffffff; /* Slightly lighter color for the description */
+    margin-top: 20px;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+
+
+
+/* Gradient Background Styling for Info Block */
+/* Gradient Background Styling for Info Block */
+/* Container for all info blocks */
+.info-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows the blocks to wrap on smaller screens */
+    gap: 20px; /* Space between the blocks */
+    padding: 20px; /* Padding around the container */
+    justify-content: space-between; /* Even space distribution */
+}
+
+/* Base styling for each info block */
+.info-block {
+    background: linear-gradient(to right, #e3bc74, #b18637); /* Green to Black gradient */
+    color: white; /* White text */
+    padding: 20px;
+    border-radius: 15px; /* Rounded corners */
+    flex: 1 1 30%; /* Flexible block size, 30% width */
+    min-width: 300px; /* Minimum width for each block */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+
+.info-block:hover {
+    transform: translateY(-5px); /* Slight hover movement */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+.info-block a{
+    text-decoration: none;
+}
+
+/* Heading styling */
+.info-block h3 {
+    font-size: 22px; /* Heading font size */
+    font-weight: bold; /* Bold text */
+    margin-bottom: 15px; /* Space below the heading */
+    text-transform: uppercase; /* Uppercase text */
+    
+}
+
+.info-block .cta {
+    color: #000000; /* White color for the CTA text */
+    font-weight: normal; /* Lighter weight for CTA text */
+    text-decoration: none; /* No underline */
+    transition: color 0.3s ease; /* Smooth hover color change */
+}
+
+.info-block .cta:hover {
+    color: black; /* Hover color for CTA */
+}
+
+/* Paragraph styling */
+.info-block p {
+    font-size: 16px; /* Paragraph font size */
+    line-height: 1.6; /* Line height for better readability */
+    font-weight: 300; /* Lighter font weight */
+    margin-bottom: 0;
+    color: #000000;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .info-block {
+        flex: 1 1 100%; /* Full width for each block on smaller screens */
+    }
+}
+
+
+.institute {
+    background-color: #013220;
+} */
+
+.director {
+    background-color: #000000;
+}
+
+.dumad {
+    background-color:black ;
+}
+
+.vision {
+    background-color: #013220;
+}
+
+.governance {
+    background-color: #013220;
+}
+
+.act {
+    background-color: black;
+}
+
+.statement {
+    background-color: black ;
+}
+
+.annual {
+    background-color:#013220;
+}
+
+.FAQ {
+    background-color: #013220;
+}
+
+.policies {
+    background-color:black ;
+}
+
+
+
+
+
+
+
+.info-block h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.info-block p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.info-block .cta {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+
+
+
+
+/* Footer CSS */
+/* 
+footer {
+    background-color: rgb(0, 0, 0);  //Black background like image 1 
+    color: #fff;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.footer-section h3 {
+    color: #d9a760;  // Gold color for headings 
+    margin-bottom: 10px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    // color: #d9a760; 
+    text-decoration: underline;
+}
+
+
+.contact-info p, .footer-bottom p {
+    line-height: 1.6;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #444;
+    padding-top: 20px;
+}
+
+.footer-social a {
+    color: #fff;
+    margin: 0 10px;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.footer-social a:hover {
+    color: #d9a760;
+}
+*/
