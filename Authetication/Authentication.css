@@ -1,0 +1,126 @@
+html {
+    font-size: 10px;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #e8c28e, #f3dfc0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 1rem;
+    overflow: hidden;
+}
+
+.container {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 0.6rem;
+    box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 100%;
+    max-width: 35rem;
+}
+
+h2 {
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    color: #7d5a3a;
+}
+
+.input-group {
+    margin-bottom: 1.2rem;
+}
+
+input {
+    width: 100%;
+    padding: 1rem;
+    border: 0.1rem solid #c29864;
+    border-radius: 0.4rem;
+    font-size: 1.4rem;
+    box-sizing: border-box;
+    color: #7d5a3a;
+}
+
+button {
+    width: 100%;
+    padding: 1rem;
+    background: #000000;
+    color: white;
+    border: none;
+    border-radius: 0.4rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin-top: 0.8rem;
+    transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #73461b;
+}
+
+.extra-links {
+    text-align: right;
+    font-size: 1.2rem;
+    color: #7d5a3a;
+}
+
+.extra-links a {
+    text-decoration: none;
+    color: #c29864;
+}
+
+.switch-text {
+    margin-top: 1.2rem;
+    font-size: 1.2rem;
+    color: #7d5a3a;
+}
+
+.switch-text a {
+    color: #c29864;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 76.8rem) {
+    .container {
+        width: 90%;
+        padding: 1.6rem;
+    }
+
+    input {
+        padding: 0.8rem;
+        font-size: 1.2rem;
+    }
+
+    button {
+        padding: 0.8rem;
+        font-size: 1.4rem;
+    }
+}
+
+@media screen and (max-width: 48rem) {
+    body {
+        padding: 0.8rem;
+    }
+
+    .container {
+        padding: 1.2rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    input {
+        font-size: 1.2rem;
+    }
+
+    button {
+        font-size: 1.4rem;
+    }
+}

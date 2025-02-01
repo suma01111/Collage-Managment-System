@@ -1,7 +1,6 @@
-
-
+  
 body {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Roboto', Times, serif;
   margin: 0;
   padding: 0;
 }
@@ -51,6 +50,7 @@ text-decoration:none ;
   display: inline-block;
 }
 .dropbtn {
+  text-decoration: none;
   background-color: #000000;
   color: white;
   border: none;
@@ -58,7 +58,13 @@ text-decoration:none ;
   padding: 10px 20px;
   font-size: 1em;
   cursor: pointer;
+  margin-left: 0.5rem;
+  transition: background 0.3s ease-in-out;
 }
+ .dropbtn:hover {
+  background: #3e3a36;
+ }
+
 .dropdown-content {
   display: none;
   position: absolute;
