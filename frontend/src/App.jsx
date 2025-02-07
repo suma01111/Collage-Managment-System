@@ -28,6 +28,7 @@ import { AdminDashboard } from './pages/dashboard/admin/Dashboard'
 import { ManageFaculty } from './pages/dashboard/admin/ManageFaculty'
 import { ManageStudents } from './pages/dashboard/admin/ManageStudents'
 import { AdminManageCourses } from './pages/dashboard/admin/ManageCourses'
+import { ManageUsers } from './pages/dashboard/admin/ManageUsers'
 
 const router = createBrowserRouter([
   {
@@ -71,7 +72,8 @@ const router = createBrowserRouter([
       { path: "dashboard", element: <AdminDashboard /> },
       { path: "manage-faculty", element: <ManageFaculty /> },
       { path: "manage-students", element: <ManageStudents /> },
-      { path: "manage-courses", element: <AdminManageCourses /> }
+      { path: "manage-courses", element: <AdminManageCourses /> },
+      { path: "manage-users", element: <ManageUsers /> }
     ]
   }
 ])

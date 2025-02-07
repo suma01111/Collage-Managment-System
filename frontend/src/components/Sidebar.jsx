@@ -24,6 +24,7 @@ export const Sidebar = ({ role }) => {
       case 'admin':
         return [
           { path: '/admin/dashboard', label: 'Dashboard' },
+          { path: '/admin/manage-users', label: 'Manage Users' },
           { path: '/admin/manage-faculty', label: 'Manage Faculty' },
           { path: '/admin/manage-students', label: 'Manage Students' },
           { path: '/admin/manage-courses', label: 'Manage Courses' }

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 export const ManageUsers = () => {
   const [users, setUsers] = useState([])
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     fetchUsers()
@@ -10,40 +11,27 @@ export const ManageUsers = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/users', {
+      setLoading(true)
+      const response = await fetch('http://localhost:3000/api/admin/users', {
         credentials: 'include'
       })
       const data = await response.json()
-      setUsers(data.users)
-    } catch (error) {
-      setError('Failed to fetch users')
-    }
-  }
-
-  const handleRoleChange = async (userId, role) => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/admin/users/${userId}/role`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify({ role })
-      })
 
       if (!response.ok) {
-        throw new Error('Failed to update role')
+        throw new Error(data.error)
       }
 
-      fetchUsers()
+      setUsers(data.users)
     } catch (error) {
       setError(error.message)
+    } finally {
+      setLoading(false)
     }
   }
 
   const handleStatusChange = async (userId, status) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/users/${userId}/status`, {
+      const response = await fetch(`http://localhost:3000/api/admin/users/${userId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -52,8 +40,34 @@ export const ManageUsers = () => {
         body: JSON.stringify({ status })
       })
 
+      const data = await response.json()
+
       if (!response.ok) {
-        throw new Error('Failed to update status')
+        throw new Error(data.error)
+      }
+
+      // Refresh users list
+      fetchUsers()
+    } catch (error) {
+      setError(error.message)
+    }
+  }
+
+  const handleRoleChange = async (userId, role) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/admin/users/${userId}/role`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({ role })
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error)
       }
 
       fetchUsers()
@@ -61,6 +75,8 @@ export const ManageUsers = () => {
       setError(error.message)
     }
   }
+
+  if (loading) return <div>Loading...</div>
 
   return (
     <div className="manage-users-container">
@@ -89,13 +105,13 @@ export const ManageUsers = () => {
                   >
                     <option value="student">Student</option>
                     <option value="faculty">Faculty</option>
-                    <option value="admin">Admin</option>
                   </select>
                 </td>
                 <td>
                   <select
                     value={user.status}
                     onChange={(e) => handleStatusChange(user.id, e.target.value)}
+                    className={`status-${user.status}`}
                   >
                     <option value="pending">Pending</option>
                     <option value="active">Active</option>
@@ -103,7 +119,12 @@ export const ManageUsers = () => {
                   </select>
                 </td>
                 <td>
-                  <button className="delete-btn">Delete</button>
+                  <button 
+                    className="delete-btn"
+                    onClick={() => handleStatusChange(user.id, 'rejected')}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
