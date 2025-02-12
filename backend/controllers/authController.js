@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from 'uuid'
 export const login = async (req, res) => {
   const { email, password } = req.body
 
+  console.log('Login attempt:', { email }) // Log login attempt
+
   if (!email || !password) {
     return res.status(400).json({ error: 'Email and password are required' })
   }
@@ -19,6 +21,8 @@ export const login = async (req, res) => {
           console.error('Database error:', error)
           return res.status(500).json({ error: 'Internal server error' })
         }
+
+        console.log('Query results:', results) // Log query results
 
         if (results.length === 0) {
           return res.status(401).json({ error: 'Invalid credentials' })
@@ -35,6 +39,8 @@ export const login = async (req, res) => {
 
         // Compare password
         const match = await bcrypt.compare(password, user.password)
+        console.log('Password match:', match) // Log password comparison result
+
         if (!match) {
           return res.status(401).json({ error: 'Invalid credentials' })
         }

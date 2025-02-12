@@ -2,7 +2,7 @@ import db from '../config/db.js'
 
 export const getUsers = (req, res) => {
   db.query(
-    'SELECT id, name, email, role, status FROM users WHERE role != "admin"',
+    'SELECT id, name, email, role, status FROM users WHERE role != \'admin\'',
     (error, results) => {
       if (error) {
         console.error('Error fetching users:', error)

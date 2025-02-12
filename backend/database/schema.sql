@@ -11,6 +11,15 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+INSERT INTO users (name, email, password, role, status) VALUES 
+('Admin', 
+ 'Admin@iiitvadodara.ac.in', 
+ '$2b$10$hAz1KZUs0Bd9dZLVZ9mAueYZaoV5EZBMgG1wwRdBmcY7jOTNThyM2', 
+ 'admin', 
+ 'active'
+);
+
+
 CREATE TABLE user_sessions (
     session_id VARCHAR(255) PRIMARY KEY,
     user_id INT NOT NULL,
@@ -18,3 +27,5 @@ CREATE TABLE user_sessions (
     expires_at TIMESTAMP NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 ); 
+
+
