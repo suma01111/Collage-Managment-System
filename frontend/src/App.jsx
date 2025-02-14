@@ -7,7 +7,7 @@ import { Login } from './pages/authentication/Login'
 import { Signup } from './pages/authentication/Signup'
 import { AppLayout } from './components/Layout/AppLayout'
 import { ErrorPage } from './pages/ErrorPage'
-import { DashboardLayout } from './components/Layout/DashboardLayout'
+import { DashboardLayout } from './components/Layout/DashboardLayout'  
 
 // Student Dashboard imports
 import { StudentDashboard } from './pages/dashboard/student/Dashboard'
@@ -15,6 +15,7 @@ import { StudentProfile } from './pages/dashboard/student/Profile'
 import { StudentResults } from './pages/dashboard/student/Results'
 import { StudentCourses } from './pages/dashboard/student/Courses'
 import { StudentTimeTable } from './pages/dashboard/student/TimeTable'
+import { StudentSetup } from './pages/dashboard/setuppage/StudentProfile'
 
 // Faculty Dashboard imports
 import { FacultyDashboard } from './pages/dashboard/faculty/Dashboard'
@@ -51,7 +52,8 @@ const router = createBrowserRouter([
       { path: "profile", element: <StudentProfile /> },
       { path: "results", element: <StudentResults /> },
       { path: "courses", element: <StudentCourses /> },
-      { path: "timetable", element: <StudentTimeTable /> }
+      { path: "timetable", element: <StudentTimeTable /> },
+      { path: "studentSetup", element: <StudentSetup /> }
     ]
   },
   {

@@ -19,7 +19,6 @@ db.connect((err) => {
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
       database: process.env.DB_NAME
-      // Not logging password for security
     })
     return
   }
