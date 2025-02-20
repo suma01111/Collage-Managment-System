@@ -30,6 +30,7 @@ import { ManageFaculty } from './pages/dashboard/admin/ManageFaculty'
 import { ManageStudents } from './pages/dashboard/admin/ManageStudents'
 import { AdminManageCourses } from './pages/dashboard/admin/ManageCourses'
 import { ManageUsers } from './pages/dashboard/admin/ManageUsers'
+import { FacultySetup } from './pages/dashboard/setuppage/FacultySetup'
 
 const router = createBrowserRouter([
   {
@@ -64,7 +65,8 @@ const router = createBrowserRouter([
       { path: "profile", element: <FacultyProfile /> },
       { path: "manage-results", element: <ManageResults /> },
       { path: "manage-courses", element: <ManageCourses /> },
-      { path: "manage-timetable", element: <ManageTimeTable /> }
+      { path: "manage-timetable", element: <ManageTimeTable /> },
+      { path: "facultysetup", element: <FacultySetup /> }
     ]
   },
   {

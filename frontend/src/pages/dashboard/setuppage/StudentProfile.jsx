@@ -16,19 +16,30 @@ export const StudentSetup = () => {
     const handleChange = (e) => {
         setStudentData({ ...studentData, [e.target.name]: e.target.value });
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
+        const formattedData = {
+            Student_ID: studentData.studentId,
+            full_name: studentData.fullName,
+            DOB: studentData.DOB,
+            Phone_No: studentData.phoneNo,
+            Email: studentData.email,
+            Address: studentData.address,
+            Department: studentData.department,
+            Current_semester: studentData.currentSemester,
+            Enrollment_Year: studentData.enrollmentYear,
+        };
+    
         try {
             const response = await fetch("http://localhost:3000/api/student/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(studentData),
+                body: JSON.stringify(formattedData),
             });
-
+    
             const result = await response.json();
             if (!response.ok) throw new Error(result.error);
             alert("Student registered successfully!");
@@ -36,7 +47,7 @@ export const StudentSetup = () => {
             console.error("Registration failed:", error);
         }
     };
-
+    
 
     return (
         <div className="registration-container">

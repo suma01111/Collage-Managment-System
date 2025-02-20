@@ -27,29 +27,22 @@ export const Login = () => {
         throw new Error(data.error || 'Login failed')
       }
 
-      // Store user data in localStorage
-      localStorage.setItem('user', JSON.stringify({
-        email: data.user.email,
-        role: data.user.role
-      }))
-
-      // Redirect based on role
-      switch(data.user.role) {
-        case 'student':
+      // Redirect based on role and profile completion status
+      if (data.user.role === 'student') {
+        if (data.user.isProfileComplete) {
           navigate('/student/dashboard')
-          break
-        case 'faculty':
-          navigate('/faculty/dashboard')
-          break
-        case 'admin':
-          navigate('/admin/dashboard')
-          break
-        default:
-          navigate('/login')
+        } else {
+          navigate('/student/studentSetup')
+        }
+      } else if (data.user.role === 'faculty') {
+        navigate('/faculty/dashboard')
+      } else if (data.user.role === 'admin') {
+        navigate('/admin/dashboard')
+      } else {
+        navigate('/login')
       }
     } catch (error) {
       setError(error.message)
-      // Clear error after 5 seconds
       setTimeout(() => setError(''), 5000)
     }
   }
@@ -89,17 +82,7 @@ export const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      {error && (
-        <p className="error">
-          {error}
-          {error.includes('pending') && (
-            <span className="pending-note">
-              <br />
-              Please wait for an administrator to approve your account.
-            </span>
-          )}
-        </p>
-      )}
+      {error && <p className="error">{error}</p>}
     </div>
   )
 }
