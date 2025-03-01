@@ -55,6 +55,8 @@ CREATE TABLE IF NOT EXISTS courses (
     course_id VARCHAR(50) PRIMARY KEY,
     course_name VARCHAR(200) NOT NULL,
     department_id VARCHAR(50),
+    semester_id VARCHAR(30),
+    FOREIGN KEY (semester_id) REFERENCES semesters(semester_id) ON DELETE CASCADE,
     FOREIGN KEY (department_id) REFERENCES departments(department_id) ON DELETE CASCADE
 );
 
@@ -87,8 +89,6 @@ CREATE TABLE IF NOT EXISTS enrollment (
     Enrollment_Id INT PRIMARY KEY AUTO_INCREMENT,
     Student_ID VARCHAR(25),
     course_id VARCHAR(50),
-    semester_id VARCHAR(30),
     FOREIGN KEY (Student_ID) REFERENCES student_info(Student_ID) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE CASCADE,
-    FOREIGN KEY (semester_id) REFERENCES semesters(semester_id) ON DELETE CASCADE
+    FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE CASCADE
 );

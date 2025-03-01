@@ -1,41 +1,32 @@
+import { useState } from "react";
+import { useEffect } from "react";
+
 export const StudentCourses = () => {
-  const courses = [
-    {
-      id: 1,
-      code: 'CS301',
-      name: 'Data Structures',
-      instructor: 'Dr. Smith',
-      schedule: 'Mon, Wed 10:00 AM'
-    },
-    {
-      id: 2,
-      code: 'CS302',
-      name: 'Database Systems',
-      instructor: 'Prof. Johnson',
-      schedule: 'Tue, Thu 2:00 PM'
-    },
-    {
-      id: 3,
-      code: 'CS303',
-      name: 'Web Development',
-      instructor: 'Dr. Williams',
-      schedule: 'Wed, Fri 11:00 AM'
-    }
-  ]
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/student/courses', { credentials: 'include' }) 
+      .then(response => response.json()) 
+      .then(data => setCourses(data))
+      .catch(error => console.error("Error fetching courses:", error));
+  }, []);
+  
 
   return (
     <div className="courses-container">
       <h1>My Courses</h1>
       <div className="courses-grid">
-        {courses.map(course => (
-          <div key={course.id} className="course-card">
-            <h3>{course.name}</h3>
-            <p>Course Code: {course.code}</p>
-            <p>Instructor: {course.instructor}</p>
-            <p>Schedule: {course.schedule}</p>
-          </div>
-        ))}
+        {courses.length > 0 ? (
+          courses.map(course => (
+            <div key={course.course_id} className="course-card">
+              <h3>{course.course_name}</h3>
+              <p>Course ID: {course.course_id}</p>
+            </div>
+          ))
+        ) : (
+          <p>No courses found.</p>
+        )}
       </div>
     </div>
-  )
+  );
 } 
