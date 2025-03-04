@@ -51,12 +51,7 @@ export const registerStudent = (req, res) => {
 
 // Function to enroll student in relevant courses
 const enrollStudentInCourses = (Student_ID, Department, Current_semester, res) => {
-  // const query = `
-  //   INSERT INTO enrollment (Student_ID, course_id)
-  //   SELECT ?, c.course_id
-  //   FROM courses c
-  //   WHERE c.department_id = ? AND c.semester_id = ?;
-  // `;
+ 
     const query = `
     INSERT INTO enrollment (Student_ID, course_id)
     SELECT 

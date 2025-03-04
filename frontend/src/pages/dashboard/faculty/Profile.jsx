@@ -1,4 +1,35 @@
+import { useEffect, useState } from "react"
+
 export const FacultyProfile = () => {
+  const [facultyData, setFacultyData] = useState(null);
+  const [error, setError] = useState('');
+
+  useEffect (() => {
+    const fetchProfile = async () => {
+      try{
+        const response = await fetch('http://localhost:3000/api/faculty/profile', {
+          credentials:'include'
+        });
+
+        const data = await response.json();
+
+        if(!response.ok) 
+          throw new Error(data.error || 'Failed to fetch profile');
+
+        setFacultyData(data);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  if(error) return <p className="error">{error}</p>
+  if(!facultyData) return <p>Loading...</p>
+
+
+  
   return (
     <div className="profile-container">
       <h1>Faculty Profile</h1>
@@ -6,23 +37,20 @@ export const FacultyProfile = () => {
         <div className="profile-header">
           <img src="/placeholder-avatar.png" alt="Profile" className="profile-avatar" />
           <div className="profile-info">
-            <h2>Dr. Sarah Smith</h2>
-            <p>Faculty ID: FC12345</p>
-            <p>Email: sarah.smith@example.com</p>
+            <h2>{facultyData.Full_Name}</h2>
+            <p><strong>Faculty Id: </strong>{facultyData.Faculty_ID}</p>
           </div>
         </div>
         <div className="profile-details">
           <div className="detail-group">
             <h3>Personal Information</h3>
-            <p>Department: Computer Science</p>
-            <p>Phone: (123) 456-7890</p>
-            <p>Office: Room 405, CS Building</p>
+            <p><strong>Phone No.:</strong> {facultyData.Phone_No}</p>
+            <p><strong>Email: </strong>{facultyData.Email}</p>
           </div>
-          <div className="detail-group">
+          <div className="detail-group">  
             <h3>Academic Information</h3>
-            <p>Specialization: Data Structures & Algorithms</p>
-            <p>Years of Experience: 8</p>
-            <p>Office Hours: Mon-Wed 2:00 PM - 4:00 PM</p>
+            <p><strong>Specialization:</strong> {facultyData.Specialization}</p>
+            <p><strong>Years of Experience:</strong> {facultyData.Year_of_exp}</p>
           </div>
         </div>
       </div>

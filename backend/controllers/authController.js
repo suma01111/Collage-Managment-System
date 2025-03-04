@@ -2,6 +2,7 @@ import db from '../config/db.js'
 import bcrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid'
 
+
 export const login = async (req, res) => {
   const { email, password } = req.body
 
@@ -47,37 +48,52 @@ export const login = async (req, res) => {
               return res.status(500).json({ error: 'Internal server error' })
             }
 
-            const isProfileComplete = studentResults.length > 0
+            const isStudentProfileComplete = studentResults.length > 0
 
-            // Create session
-            const sessionId = uuidv4()
-            const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000) 
-
+            // Check if faculty profile exists
             db.query(
-              'INSERT INTO user_sessions (session_id, user_id, expires_at) VALUES (?, ?, ?)',
-              [sessionId, user.id, expiresAt],
-              (error) => {
+              'SELECT * FROM faculty_info WHERE Email = ?',
+              [email],
+              (error, facultyResults) => {
                 if (error) {
-                  console.error('Session creation error:', error)
+                  console.error('Database error:', error)
                   return res.status(500).json({ error: 'Internal server error' })
                 }
 
-                res.cookie('sessionId', sessionId, {
-                  httpOnly: true,
-                  secure: process.env.NODE_ENV === 'production',
-                  expires: expiresAt,
-                  sameSite: 'strict'
-                })
+                const isFacultyProfileComplete = facultyResults.length > 0
 
-                res.json({
-                  message: 'Login successful',
-                  user: {
-                    id: user.id,
-                    email: user.email,
-                    role: user.role,
-                    isProfileComplete
+                // Create session
+                const sessionId = uuidv4()
+                const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000) 
+
+                db.query(
+                  'INSERT INTO user_sessions (session_id, user_id, expires_at) VALUES (?, ?, ?)',
+                  [sessionId, user.id, expiresAt],
+                  (error) => {
+                    if (error) {
+                      console.error('Session creation error:', error)
+                      return res.status(500).json({ error: 'Internal server error' })
+                    }
+
+                    res.cookie('sessionId', sessionId, {
+                      httpOnly: true,
+                      secure: process.env.NODE_ENV === 'production',
+                      expires: expiresAt,
+                      sameSite: 'strict'
+                    })
+
+                    res.json({
+                      message: 'Login successful',
+                      user: {
+                        id: user.id,
+                        email: user.email,
+                        role: user.role,
+                        isStudentProfileComplete,
+                        isFacultyProfileComplete
+                      }
+                    })
                   }
-                })
+                )
               }
             )
           }

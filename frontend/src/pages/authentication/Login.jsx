@@ -29,13 +29,17 @@ export const Login = () => {
 
       // Redirect based on role and profile completion status
       if (data.user.role === 'student') {
-        if (data.user.isProfileComplete) {
+        if (data.user.isStudentProfileComplete) {
           navigate('/student/dashboard')
         } else {
           navigate('/student/studentSetup')
         }
       } else if (data.user.role === 'faculty') {
-        navigate('/faculty/dashboard')
+        if (data.user.isFacultyProfileComplete) {
+          navigate('/faculty/profile')
+        } else {
+          navigate('/faculty/facultySetup')
+        }
       } else if (data.user.role === 'admin') {
         navigate('/admin/dashboard')
       } else {

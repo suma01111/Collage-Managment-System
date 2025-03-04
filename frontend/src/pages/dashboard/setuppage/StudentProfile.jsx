@@ -47,7 +47,13 @@ export const StudentSetup = () => {
             console.error("Registration failed:", error);
         }
     };
-    
+    // Faculty_ID VARCHAR(25) PRIMARY KEY,
+    // Full_Name VARCHAR(255) NOT NULL,
+    // Email VARCHAR(100) NOT NULL,
+    // Department VARCHAR(50) NOT NULL,
+    // Phone_No CHAR(10) NOT NULL,
+    // Specialization VARCHAR(300),
+    // Year_of_exp INT NOT NULL
 
     return (
         <div className="registration-container">
