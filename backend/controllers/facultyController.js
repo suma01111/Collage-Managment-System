@@ -48,3 +48,27 @@ export const getFacultyProfile = (req, res) => {
         }
     )
 }
+
+export const getFacultyForCourses = (req,res) => {
+    console.log("recieved req: ", req.body);
+
+    db.query(
+        'SELECT Faculty_ID, Full_Name FROM faculty_info',
+        (error,results) => {
+            if(error) {
+                console.error('Database error: ', error);
+                return res.status(500).json({
+                    error: 'Internal Server error'
+                })
+            }
+
+            if(results.length===0) {
+                return res.status(404).json({
+                    error: 'Faculty profile not found'
+                })
+            }
+
+            res.json(results)
+        }
+    )
+}

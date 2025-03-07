@@ -39,7 +39,20 @@ CREATE TABLE IF NOT EXISTS semesters (
 
 INSERT IGNORE INTO departments (department_id, department_name) VALUES
 ('IT', 'Information Technology'),
-('CSE', 'Computer Science Engineering');
+('CSE', 'Computer Science Engineering'),
+('ECE', 'Electronics and Communication Engineering'),
+('EEE', 'Electrical and Electronics Engineering'),
+('ME', 'Mechanical Engineering'),
+('CE', 'Civil Engineering'),
+('AE', 'Aeronautical Engineering'),
+('BT', 'Biotechnology'),
+('CH', 'Chemical Engineering'),
+('MT', 'Metallurgical Engineering'),
+('PE', 'Petroleum Engineering'),
+('AI', 'Artificial Intelligence and Machine Learning'),
+('DS', 'Data Science'),
+('CY', 'Cyber Security');
+
 
 INSERT IGNORE INTO semesters (semester_id, semester_name) VALUES
 ('1', 'First Semester'),
@@ -50,6 +63,7 @@ INSERT IGNORE INTO semesters (semester_id, semester_name) VALUES
 ('6', 'Sixth Semester'),
 ('7', 'Seventh Semester'),
 ('8', 'Eighth Semester');
+
 
 CREATE TABLE IF NOT EXISTS courses (
     course_id VARCHAR(50) PRIMARY KEY,
@@ -89,4 +103,21 @@ CREATE TABLE IF NOT EXISTS enrollment (
     course_id VARCHAR(50),
     FOREIGN KEY (Student_ID) REFERENCES student_info(Student_ID) ON DELETE CASCADE,
     FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE IF NOT EXISTS faculty_department (
+    Faculty_ID VARCHAR(25),
+    Department_ID VARCHAR(50),
+    PRIMARY KEY (Faculty_ID, Department_ID),
+    FOREIGN KEY (Faculty_ID) REFERENCES faculty_info(Faculty_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Department_ID) REFERENCES departments(department_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS faculty_courses (
+    Faculty_ID VARCHAR(25),
+    Course_ID VARCHAR(50),
+    PRIMARY KEY (Faculty_ID, Course_ID),
+    FOREIGN KEY (Faculty_ID) REFERENCES faculty_info(Faculty_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Course_ID) REFERENCES courses(course_id) ON DELETE CASCADE
 );

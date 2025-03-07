@@ -13,12 +13,30 @@ export const StudentSetup = () => {
         enrollmentYear: "",
     });
 
+    const departments = [
+        { department_id: "IT", department_name: "Information Technology" },
+        { department_id: "CSE", department_name: "Computer Science Engineering" },
+        { department_id: "ECE", department_name: "Electronics and Communication Engineering" },
+        { department_id: "EEE", department_name: "Electrical and Electronics Engineering" },
+        { department_id: "ME", department_name: "Mechanical Engineering" },
+        { department_id: "CE", department_name: "Civil Engineering" },
+        { department_id: "AE", department_name: "Aeronautical Engineering" },
+        { department_id: "BT", department_name: "Biotechnology" },
+        { department_id: "CH", department_name: "Chemical Engineering" },
+        { department_id: "MT", department_name: "Metallurgical Engineering" },
+        { department_id: "PE", department_name: "Petroleum Engineering" },
+        { department_id: "AI", department_name: "Artificial Intelligence and Machine Learning" },
+        { department_id: "DS", department_name: "Data Science" },
+        { department_id: "CY", department_name: "Cyber Security" }
+    ];
+
+
     const handleChange = (e) => {
         setStudentData({ ...studentData, [e.target.name]: e.target.value });
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         const formattedData = {
             Student_ID: studentData.studentId,
             full_name: studentData.fullName,
@@ -30,7 +48,7 @@ export const StudentSetup = () => {
             Current_semester: studentData.currentSemester,
             Enrollment_Year: studentData.enrollmentYear,
         };
-    
+
         try {
             const response = await fetch("http://localhost:3000/api/student/register", {
                 method: "POST",
@@ -39,7 +57,7 @@ export const StudentSetup = () => {
                 },
                 body: JSON.stringify(formattedData),
             });
-    
+
             const result = await response.json();
             if (!response.ok) throw new Error(result.error);
             alert("Student registered successfully!");
@@ -47,13 +65,6 @@ export const StudentSetup = () => {
             console.error("Registration failed:", error);
         }
     };
-    // Faculty_ID VARCHAR(25) PRIMARY KEY,
-    // Full_Name VARCHAR(255) NOT NULL,
-    // Email VARCHAR(100) NOT NULL,
-    // Department VARCHAR(50) NOT NULL,
-    // Phone_No CHAR(10) NOT NULL,
-    // Specialization VARCHAR(300),
-    // Year_of_exp INT NOT NULL
 
     return (
         <div className="registration-container">
@@ -93,8 +104,11 @@ export const StudentSetup = () => {
                     <label>Department:</label>
                     <select name="department" value={studentData.department} onChange={handleChange} required className="form-select">
                         <option value="">Select Department</option>
-                        <option value="IT">Information Technology</option>
-                        <option value="CSE">Computer Science Engineering</option>
+                        {departments.map((dept) => (
+                            <option key={dept.department_id} value={dept.department_id}>
+                                {dept.department_name}
+                            </option>
+                        ))}
                     </select>
                 </div>
 

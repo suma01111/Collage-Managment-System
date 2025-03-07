@@ -45,7 +45,6 @@ export const ManageUsers = () => {
       if (!response.ok) {
         throw new Error(data.error)
       }
-
       // Refresh users list
       fetchUsers()
     } catch (error) {
