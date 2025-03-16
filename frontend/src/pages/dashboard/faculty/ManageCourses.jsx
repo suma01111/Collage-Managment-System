@@ -1,54 +1,79 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 export const ManageCourses = () => {
-  const courses = [
-    {
-      id: 1,
-      code: 'CS301',
-      name: 'Data Structures',
-      students: 40,
-      schedule: 'Mon, Wed 10:00 AM'
-    },
-    {
-      id: 2,
-      code: 'CS302',
-      name: 'Database Systems',
-      students: 35,
-      schedule: 'Tue, Thu 2:00 PM'
-    }
-  ]
+  const [courses, setCourses] = useState([]);
+  const [facultyId, setFacultyId] = useState(null);
+
+  useEffect(() => {
+    const fetchFacultyId = async () => {
+      try {
+        const storedEmail = localStorage.getItem('facultyEmail'); // Get faculty email from localStorage
+        if (!storedEmail) {
+          console.error('No faculty email found in localStorage');
+          return;
+        }
+
+        const response = await fetch('http://localhost:3000/api/faculty/profile', {
+          credentials:'include'
+        });
+
+        const faculty = await response.json();
+        console.log(faculty);
+        if (faculty) {
+          setFacultyId(faculty.Faculty_ID);
+          console.log('Faculty ID:', facultyId);
+        } else {
+          console.error('Faculty not found for the given email');
+        }
+      } catch (error) {
+        console.error('Error fetching faculty profile:', error);
+      }
+    };
+
+    fetchFacultyId();
+  }, []);
+
+  useEffect(() => {
+    if (!facultyId) return;
+
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/faculty/courses/${facultyId}`);
+        setCourses(response.data);
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      }
+    };
+
+    fetchCourses();
+  }, [facultyId]);
 
   return (
     <div className="manage-courses-container">
-      <h1>Manage Courses</h1>
-      <div className="course-actions">
-        <button className="add-course-btn">Add New Course</button>
-      </div>
+      <h1>Assigned Courses</h1>
       <div className="courses-table">
         <table>
           <thead>
             <tr>
               <th>Course Code</th>
               <th>Course Name</th>
+              <th>Department</th>
               <th>Students Enrolled</th>
-              <th>Schedule</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {courses.map(course => (
-              <tr key={course.id}>
-                <td>{course.code}</td>
-                <td>{course.name}</td>
-                <td>{course.students}</td>
-                <td>{course.schedule}</td>
-                <td>
-                  <button className="edit-btn">Edit</button>
-                  <button className="view-btn">View</button>
-                </td>
+            {courses.map((course) => (
+              <tr key={course.course_id}>
+                <td>{course.course_id}</td>
+                <td>{course.course_name}</td>
+                <td>{course.department_name}</td>
+                <td>{course.student_count}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
     </div>
-  )
-} 
+  );
+};

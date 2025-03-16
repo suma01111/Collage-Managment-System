@@ -18,7 +18,7 @@ export const Sidebar = ({ role }) => {
           { path: '/faculty/dashboard', label: 'Dashboard' },
           { path: '/faculty/profile', label: 'Profile' },
           { path: '/faculty/manage-results', label: 'Manage Results' },
-          { path: '/faculty/manage-courses', label: 'Manage Courses' },
+          { path: '/faculty/manage-courses', label: 'Assigned Courses' },
           { path: '/faculty/manage-timetable', label: 'Manage Timetable' }
         ]
       case 'admin':

@@ -10,46 +10,40 @@ export const Login = () => {
   const [error, setError] = useState('')
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const response = await fetch('http://localhost:3000/api/auth/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify(formData)
-      })
-
-      const data = await response.json()
-
+        body: JSON.stringify(formData),
+      });
+  
+      const data = await response.json();
+  
       if (!response.ok) {
-        throw new Error(data.error || 'Login failed')
+        throw new Error(data.error || 'Login failed');
       }
-
-      // Redirect based on role and profile completion status
-      if (data.user.role === 'student') {
-        if (data.user.isStudentProfileComplete) {
-          navigate('/student/dashboard')
-        } else {
-          navigate('/student/studentSetup')
-        }
-      } else if (data.user.role === 'faculty') {
-        if (data.user.isFacultyProfileComplete) {
-          navigate('/faculty/profile')
-        } else {
-          navigate('/faculty/facultySetup')
-        }
+  
+      // Store email in localStorage
+      localStorage.setItem('facultyEmail', data.user.email);
+  
+      // Redirect based on role
+      if (data.user.role === 'faculty') {
+        navigate(data.user.isFacultyProfileComplete ? '/faculty/profile' : '/faculty/facultySetup');
+      } else if (data.user.role === 'student') {
+        navigate(data.user.isStudentProfileComplete ? '/student/dashboard' : '/student/studentSetup');
       } else if (data.user.role === 'admin') {
-        navigate('/admin/dashboard')
+        navigate('/admin/dashboard');
       } else {
-        navigate('/login')
+        navigate('/login');
       }
     } catch (error) {
-      setError(error.message)
-      setTimeout(() => setError(''), 5000)
+      setError(error.message);
+      setTimeout(() => setError(''), 5000);
     }
-  }
+  };
+  
 
   const handleChange = (e) => {
     setFormData({
