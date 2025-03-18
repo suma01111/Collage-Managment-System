@@ -142,7 +142,7 @@ export const signup = async (req, res) => {
         if (error) {
           console.error('Database error:', error)
           return res.status(500).json({ error: 'Internal server error' })
-        }
+        }message: "You have already have account"
 
         if (results.length > 0) {
           return res.status(400).json({ error: 'Email already exists' })

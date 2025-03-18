@@ -4,6 +4,7 @@ export const ManageResults = () => {
   const [courses, setCourses] = useState([]);
   const [facultyId, setFacultyId] = useState(null);
   const [studentCourse, setStudentCourse] = useState([]);
+  const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
     const fetchFacultyId = async () => {
@@ -52,12 +53,14 @@ export const ManageResults = () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/faculty/course-student/${facultyId}`);
         setStudentCourse(response.data);
+        setFilterData(response.data);
       } catch (error) {
         console.error('Error fetching courses-student:', error);
       }
     } 
     fetchData();
   },[facultyId])
+
 
   const studentResults = [
     { id: 1, name: 'John Doe', subject: 'Data Structures', marks: '', grade: '' },
@@ -66,7 +69,9 @@ export const ManageResults = () => {
   ]
 
 
+
   console.log(studentCourse);
+  console.log('Filter')
   return (
     <div className="manage-results-container">
       <h1>Manage Results</h1>
@@ -75,7 +80,7 @@ export const ManageResults = () => {
           <select className="select-input">
             <option value="">Select Course</option>
             {
-              courses.map((course, index) => (
+              filterData.map((course, index) => (
                 <option key={course.course_id} value={course.course_id}>{course.course_name}</option>
               ))
             }
