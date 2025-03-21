@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+
 export const ManageResults = () => {
-  const [courses, setCourses] = useState([]);
   const [facultyId, setFacultyId] = useState(null);
-  const [studentCourse, setStudentCourse] = useState([]);
+  const [studentCourses, setStudentCourses] = useState([]);
   const [filterData, setFilterData] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(""); // Use empty string for a single value
+  const grades = ['AA', 'AB', 'BB', 'BC', 'CC', 'CD', 'DD', 'F'];
 
   useEffect(() => {
     const fetchFacultyId = async () => {
       try {
-        const storedEmail = localStorage.getItem('facultyEmail'); // Get faculty email from localStorage
+        const storedEmail = localStorage.getItem('facultyEmail');
         if (!storedEmail) {
           console.error('No faculty email found in localStorage');
           return;
@@ -34,58 +36,45 @@ export const ManageResults = () => {
   }, []);
 
   useEffect(() => {
-    if (!facultyId) return;
+    const fetchData = async () => {
+      if (!facultyId) return; // Prevent API call if facultyId is null
 
-    const fetchCourses = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/api/faculty/courses/${facultyId}`);
-        setCourses(response.data);
-      } catch (error) {
-        console.error('Error fetching courses:', error);
-      }
-    };
-
-    fetchCourses();
-  }, [facultyId]);
-
-  useEffect(()=>{
-    const fetchData = async() => {
       try {
         const response = await axios.get(`http://localhost:3000/api/faculty/course-student/${facultyId}`);
-        setStudentCourse(response.data);
-        setFilterData(response.data);
+        setStudentCourses(response.data);
+        setFilterData(response.data); // Initially, set filterData to all courses
       } catch (error) {
         console.error('Error fetching courses-student:', error);
       }
-    } 
+    };
+
     fetchData();
-  },[facultyId])
+  }, [facultyId]);
 
+  const handleSelectCourse = (e) => {
+    const selectedCourseId = e.target.value;
+    setSelectedCourse(selectedCourseId);
 
-  const studentResults = [
-    { id: 1, name: 'John Doe', subject: 'Data Structures', marks: '', grade: '' },
-    { id: 2, name: 'Jane Smith', subject: 'Data Structures', marks: '', grade: '' },
-    { id: 3, name: 'Mike Johnson', subject: 'Data Structures', marks: '', grade: '' }
-  ]
+    const filtered = selectedCourseId ? studentCourses.filter(course => course.Course_ID === selectedCourseId) : studentCourses;
+    setFilterData(filtered);
+  };
 
-
-
-  console.log(studentCourse);
-  console.log('Filter')
   return (
     <div className="manage-results-container">
       <h1>Manage Results</h1>
       <div className="results-form">
         <div className="form-header">
-          <select className="select-input">
+          {/* onChange should be on the select, not the option */}
+          <select className="select-input" value={selectedCourse} onChange={handleSelectCourse}>
             <option value="">Select Course</option>
-            {
-              filterData.map((course, index) => (
-                <option key={course.course_id} value={course.course_id}>{course.course_name}</option>
-              ))
-            }
+            {studentCourses.map((course) => (
+              <option key={course.Course_ID} value={course.Course_ID}>
+                {course.course_name}
+              </option>
+            ))}
           </select>
-          <select className="select-input">   
+
+          <select className="select-input">
             <option value="">Select Exam Type</option>
             <option value="mid">Midterm</option>
             <option value="final">Final</option>
@@ -103,21 +92,19 @@ export const ManageResults = () => {
               </tr>
             </thead>
             <tbody>
-              {studentResults.map(student => (
-                <tr key={student.id}>
-                  <td>{student.name}</td>
-                  <td>{student.subject}</td>
+              {filterData.map(student => (
+                <tr key={student.Student_ID+student.Course_ID}>
+                  <td>{student.full_name}</td>
+                  <td>{student.course_name}</td>
                   <td>
                     <input type="number" className="marks-input" placeholder="Enter marks" />
                   </td>
                   <td>
                     <select className="grade-input">
                       <option value="">Select Grade</option>
-                      <option value="A">A</option>
-                      <option value="B">B</option>
-                      <option value="C">C</option>
-                      <option value="D">D</option>
-                      <option value="F">F</option>
+                      {grades.map((grade, index) => (
+                        <option value={grade} key={index}>{grade}</option>
+                      ))}
                     </select>
                   </td>
                   <td>
@@ -130,5 +117,5 @@ export const ManageResults = () => {
         </div>
       </div>
     </div>
-  )
-} 
+  );
+};

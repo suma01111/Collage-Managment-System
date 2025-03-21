@@ -104,10 +104,11 @@ export const StudentCourse = async (req, res) => {
     }
 
     const sqlQuery = `
-        SELECT Course_ID, Faculty_ID, Student_ID, full_name 
+        SELECT Course_ID, Faculty_ID, Student_ID, full_name, course_name
         FROM faculty_courses 
         NATURAL JOIN enrollment 
         NATURAL JOIN student_info
+        NATURAL JOIN courses
         WHERE Faculty_ID = ?;
     `;
 
