@@ -244,3 +244,25 @@ CREATE TABLE IF NOT EXISTS faculty_courses (
     FOREIGN KEY (Faculty_ID) REFERENCES faculty_info(Faculty_ID) ON DELETE CASCADE,
     FOREIGN KEY (Course_ID) REFERENCES courses(course_id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS faculty_assignment_logs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    faculty_id VARCHAR(25),
+    course_id VARCHAR(50),
+    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (faculty_id) REFERENCES faculty_info(Faculty_ID) ON DELETE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE CASCADE
+);
+
+DELIMITER //
+
+CREATE TRIGGER after_faculty_assignment
+AFTER INSERT ON faculty_courses
+FOR EACH ROW
+BEGIN
+    INSERT INTO faculty_assignment_logs (faculty_id, course_id)
+    VALUES (NEW.Faculty_ID, NEW.Course_ID);
+END;
+
+//
+DELIMITER ;

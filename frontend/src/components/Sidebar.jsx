@@ -11,7 +11,7 @@ export const Sidebar = ({ role }) => {
           { path: '/student/profile', label: 'Profile' },
           { path: '/student/results', label: 'Results' },
           { path: '/student/courses', label: 'Courses' },
-          { path: '/student/timetable', label: 'Timetable' }
+          { path: '/student/timetable', label: 'Timetable' },
         ]
       case 'faculty':
         return [
@@ -19,7 +19,8 @@ export const Sidebar = ({ role }) => {
           { path: '/faculty/profile', label: 'Profile' },
           { path: '/faculty/manage-results', label: 'Manage Results' },
           { path: '/faculty/manage-courses', label: 'Assigned Courses' },
-          { path: '/faculty/manage-timetable', label: 'Manage Timetable' }
+          { path: '/faculty/manage-timetable', label: 'Manage Timetable' },
+          { path: '/faculty/facultylogs', label: 'Faculty Logs' }
         ]
       case 'admin':
         return [

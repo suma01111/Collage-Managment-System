@@ -17,6 +17,7 @@ import { StudentCourses } from './pages/dashboard/student/Courses'
 import { StudentTimeTable } from './pages/dashboard/student/TimeTable'
 import { StudentSetup } from './pages/dashboard/setuppage/StudentProfile'
 
+
 // Faculty Dashboard imports
 import { FacultyDashboard } from './pages/dashboard/faculty/Dashboard'
 import { FacultyProfile } from './pages/dashboard/faculty/Profile'
@@ -31,6 +32,7 @@ import { ManageStudents } from './pages/dashboard/admin/ManageStudents'
 import { AdminManageCourses } from './pages/dashboard/admin/ManageCourses'
 import { ManageUsers } from './pages/dashboard/admin/ManageUsers'
 import { FacultySetup } from './pages/dashboard/setuppage/FacultySetup'
+import FacultyAssignmentLogs from './pages/dashboard/faculty/FacultyAssignmentLogs'
 
 const router = createBrowserRouter([
   {
@@ -54,7 +56,7 @@ const router = createBrowserRouter([
       { path: "results", element: <StudentResults /> },
       { path: "courses", element: <StudentCourses /> },
       { path: "timetable", element: <StudentTimeTable /> },
-      { path: "studentSetup", element: <StudentSetup /> }
+      { path: "studentSetup", element: <StudentSetup /> },
     ]
   },
   {
@@ -66,7 +68,8 @@ const router = createBrowserRouter([
       { path: "manage-results", element: <ManageResults /> },
       { path: "manage-courses", element: <ManageCourses /> },
       { path: "manage-timetable", element: <ManageTimeTable /> },
-      { path: "facultysetup", element: <FacultySetup /> }
+      { path: "facultysetup", element: <FacultySetup /> },
+      { path: "facultylogs", element: <FacultyAssignmentLogs /> },
     ]
   },
   {
