@@ -100,7 +100,6 @@ export const AdminManageCourses = () => {
     }
   };
 
-
   const deleteCourse = async (courseId) => {
     if (!window.confirm("Are you sure you want to delete this course?")) return;
 

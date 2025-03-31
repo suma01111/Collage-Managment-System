@@ -1,12 +1,22 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 export const ManageResults = () => {
   const [facultyId, setFacultyId] = useState(null);
+  const [courses, setCourses] = useState([]);
   const [studentCourses, setStudentCourses] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(""); // Use empty string for a single value
-  const grades = ['AA', 'AB', 'BB', 'BC', 'CC', 'CD', 'DD', 'F'];
+  const grades = ['AA', 'AB', 'BB', 'BC', 'CC', 'CD', 'DD', 'FF'];
+
+  const [result, setresult] = useState({
+    student_id: "",
+    course_id: "",
+    marks_obtained: 0,
+    grade: "",
+    total_marks: 100,
+    exam_type: ""
+  });
 
   useEffect(() => {
     const fetchFacultyId = async () => {
@@ -16,14 +26,13 @@ export const ManageResults = () => {
           console.error('No faculty email found in localStorage');
           return;
         }
-
         const response = await fetch('http://localhost:3000/api/faculty/profile', {
           credentials: 'include'
         });
 
         const faculty = await response.json();
         if (faculty) {
-          setFacultyId(faculty.Faculty_ID);
+          setFacultyId(faculty.Faculty_ID); 
         } else {
           console.error('Faculty not found for the given email');
         }
@@ -35,6 +44,21 @@ export const ManageResults = () => {
     fetchFacultyId();
   }, []);
 
+  useEffect(() => {
+    if (!facultyId) return;
+
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/faculty/courses/${facultyId}`);
+        setCourses(response.data);
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      }
+    };
+    
+    fetchCourses();
+  }, [facultyId]);
+  
   useEffect(() => {
     const fetchData = async () => {
       if (!facultyId) return; // Prevent API call if facultyId is null
@@ -53,11 +77,16 @@ export const ManageResults = () => {
 
   const handleSelectCourse = (e) => {
     const selectedCourseId = e.target.value;
+    console.log(selectedCourseId);
     setSelectedCourse(selectedCourseId);
 
-    const filtered = selectedCourseId ? studentCourses.filter(course => course.Course_ID === selectedCourseId) : studentCourses;
+    const filtered = selectedCourseId ? studentCourses.filter(course => course.Course_ID.toString() === selectedCourseId) : studentCourses;
     setFilterData(filtered);
   };
+
+  const handleSaveResult = () => {
+    e.preventDefault();
+  }
 
   return (
     <div className="manage-results-container">
@@ -66,9 +95,9 @@ export const ManageResults = () => {
         <div className="form-header">
           {/* onChange should be on the select, not the option */}
           <select className="select-input" value={selectedCourse} onChange={handleSelectCourse}>
-            <option value="">Select Course</option>
-            {studentCourses.map((course) => (
-              <option key={course.Course_ID} value={course.Course_ID}>
+            <option value="">All Courses</option>
+            {courses.map((course) => (
+              <option key={course.course_id} value={course.course_id}>
                 {course.course_name}
               </option>
             ))}
@@ -76,8 +105,8 @@ export const ManageResults = () => {
 
           <select className="select-input">
             <option value="">Select Exam Type</option>
-            <option value="mid">Midterm</option>
-            <option value="final">Final</option>
+            <option value="midsem">midsem</option>
+            <option value="endesem">endsem</option>
           </select>
         </div>
         <div className="results-table">
@@ -108,7 +137,7 @@ export const ManageResults = () => {
                     </select>
                   </td>
                   <td>
-                    <button className="save-btn">Save</button>
+                    <button onClick={handleSaveResult} className="save-btn">Save</button>
                   </td>
                 </tr>
               ))}

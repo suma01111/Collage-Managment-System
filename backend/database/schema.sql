@@ -244,3 +244,16 @@ CREATE TABLE IF NOT EXISTS faculty_courses (
     FOREIGN KEY (Faculty_ID) REFERENCES faculty_info(Faculty_ID) ON DELETE CASCADE,
     FOREIGN KEY (Course_ID) REFERENCES courses(course_id) ON DELETE CASCADE
 );
+
+
+CREATE TABLE IF NOT EXISTS results (
+    student_id VARCHAR(25) NOT NULL,
+    course_id VARCHAR(50) NOT NULL,
+    marks_obtained DECIMAL(5,2) NOT NULL,
+    total_marks DECIMAL(5,2) NOT NULL DEFAULT 100,
+    grade CHAR(2),
+    exam_type ENUM('midsem', 'endsem') NOT NULL,
+    PRIMARY KEY (student_id, course_id, exam_type), 
+    FOREIGN KEY (student_id) REFERENCES student_info(Student_ID) ON DELETE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE CASCADE
+);
