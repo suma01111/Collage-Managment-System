@@ -35,7 +35,6 @@ export const FacultyProfile = () => {
       <h1>Faculty Profile</h1>
       <div className="profile-card">
         <div className="profile-header">
-          <img src="/placeholder-avatar.png" alt="Profile" className="profile-avatar" />
           <div className="profile-info">
             <h2>{facultyData.Full_Name}</h2>
             <p><strong>Faculty Id: </strong>{facultyData.Faculty_ID}</p>

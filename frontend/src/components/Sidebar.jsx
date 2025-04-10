@@ -7,11 +7,11 @@ export const Sidebar = ({ role }) => {
     switch(role) {
       case 'student':
         return [
-          { path: '/student/dashboard', label: 'Dashboard' },
+          // { path: '/student/dashboard', label: 'Dashboard' },
           { path: '/student/profile', label: 'Profile' },
           { path: '/student/results', label: 'Results' },
           { path: '/student/courses', label: 'Courses' },
-          { path: '/student/timetable', label: 'Timetable' }
+          // { path: '/student/timetable', label: 'Timetable' }
         ]
       case 'faculty':
         return [

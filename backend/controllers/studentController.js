@@ -155,3 +155,42 @@ export const getStudentCourses = (req, res) => {
     }
   );
 };
+
+export const getStudentResults = (req, res) => {
+  const userEmail = req.user.email;
+
+  // Step 1: Get Student_ID using Email
+  db.query(
+    'SELECT Student_ID FROM student_info WHERE Email = ?',
+    [userEmail],
+    (error, studentRows) => {
+      if (error) {
+        console.error('Database error:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+
+      if (studentRows.length === 0) {
+        return res.status(404).json({ error: 'Student not found' });
+      }
+
+      const studentId = studentRows[0].Student_ID;
+
+      // Step 2: Fetch Results for the Student
+      const query = `
+        SELECT c.course_name AS subject, r.grade, r.marks_obtained AS score
+        FROM results r
+        JOIN courses c ON r.course_id = c.course_id
+        WHERE r.student_id = ?
+      `;
+
+      db.query(query, [studentId], (error, resultRows) => {
+        if (error) {
+          console.error('Error fetching results:', error);
+          return res.status(500).json({ error: 'Failed to fetch results' });
+        }
+
+        res.status(200).json({ data: resultRows });
+      });
+    }
+  );
+};

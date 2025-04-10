@@ -1,22 +1,23 @@
 import db from "../config/db.js";
+import pool from "../config/pool.js";
 
 export const registerFaculty = (req, res) => {
     console.log('Recieved Data:', req.body);
 
-    const {Faculty_ID, Full_Name, Email, Phone_No, Specialization, Year_of_exp} = req.body;
+    const { Faculty_ID, Full_Name, Email, Phone_No, Specialization, Year_of_exp } = req.body;
 
-    if(!Faculty_ID || !Full_Name || !Email || !Phone_No || !Specialization || !Year_of_exp)
-        return res.status(400).json({error: "All fields are required"});
+    if (!Faculty_ID || !Full_Name || !Email || !Phone_No || !Specialization || !Year_of_exp)
+        return res.status(400).json({ error: "All fields are required" });
 
     // insert Data 
     db.query(
         "INSERT INTO faculty_info (Faculty_ID, Full_Name, Email, Phone_No, Specialization, Year_of_exp) VALUES (?,?,?,?,?,?)",
-        [Faculty_ID, Full_Name, Email, Phone_No,Specialization, Year_of_exp],
+        [Faculty_ID, Full_Name, Email, Phone_No, Specialization, Year_of_exp],
         (error) => {
             console.log("Faculty registration error: ", error);
-            return res.status(500).json({error: "Internal server error"})
+            return res.status(500).json({ error: "Internal server error" })
         },
-        
+
         res.status(201).json({
             message: "Regestration Successful"
         })
@@ -29,15 +30,15 @@ export const getFacultyProfile = (req, res) => {
     db.query(
         'SELECT * FROM  faculty_info where Email = ?',
         [userEmail],
-        (error,results) =>{
-            if(error) {
+        (error, results) => {
+            if (error) {
                 console.error('Database error: ', error);
                 return res.status(500).json({
                     error: 'Internal Server error'
                 })
             }
 
-            if(results.length===0) {
+            if (results.length === 0) {
                 return res.status(404).json({
                     error: 'Faculty profile not found'
                 })
@@ -46,23 +47,23 @@ export const getFacultyProfile = (req, res) => {
             const faculty = results[0];
             res.json(faculty);
         }
-   )
+    )
 }
 
-export const getFacultyForCourses = (req,res) => {
+export const getFacultyForCourses = (req, res) => {
     console.log("recieved req: ", req.body);
 
     db.query(
         'SELECT Faculty_ID, Full_Name FROM faculty_info',
-        (error,results) => {
-            if(error) {
+        (error, results) => {
+            if (error) {
                 console.error('Database error: ', error);
                 return res.status(500).json({
                     error: 'Internal Server error'
                 })
             }
 
-            if(results.length===0) {
+            if (results.length === 0) {
                 return res.status(404).json({
                     error: 'Faculty profile not found'
                 })
@@ -73,9 +74,8 @@ export const getFacultyForCourses = (req,res) => {
     )
 }
 
-
 // render this courses on the faculty courses
-export const facutlyAssignCourses = async(req,res) => {
+export const facutlyAssignCourses = async (req, res) => {
     const { facultyId } = req.params;
     const query = `
         SELECT c.course_id, c.course_name, c.department_id, d.department_name, 
@@ -119,4 +119,24 @@ export const StudentCourse = async (req, res) => {
         }
         res.json(results);
     });
+};
+
+export const assignResult = async (req, res) => {
+    const { student_id, course_id, marks_obtained, grade, exam_type } = req.body;
+    console.log(student_id, course_id, marks_obtained, grade, exam_type)
+
+    try {
+        const connection = await pool.getConnection();
+
+        await connection.query(
+            'INSERT INTO results (student_id, course_id, marks_obtained, grade, exam_type) VALUES (?, ?, ?, ?, ?)',
+            [student_id, course_id, marks_obtained, grade, exam_type]
+        );
+
+        connection.release();
+        res.status(200).json({ message: 'Result saved successfully' });
+    } catch (err) {
+        console.error('Error in assignResult:', err);
+        res.status(500).json({ error: 'Failed to save result' });
+    }
 };

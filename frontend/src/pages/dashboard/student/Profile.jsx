@@ -33,7 +33,6 @@ export const StudentProfile = () => {
       <h1>Student Profile</h1>
       <div className="profile-card">
         <div className="profile-header">
-          <img src="/placeholder-avatar.png" alt="Profile" className="profile-avatar" />
           <div className="profile-info">
             <h2>{profile.full_name}</h2>
             <p>Student ID: {profile.Student_ID}</p>
