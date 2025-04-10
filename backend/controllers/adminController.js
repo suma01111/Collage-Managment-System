@@ -54,3 +54,48 @@ export const updateUserRole = (req, res) => {
     }
   )
 } 
+
+export const overallDetails = (req, res) => {
+  let total_students = 0;
+  let total_faculty = 0;
+  let total_courses = 0;
+
+  db.query(
+    "SELECT COUNT(*) AS total_students FROM users WHERE role = 'student'",
+    (err, studentResult) => {
+      if (err) {
+        console.error('Error fetching student count:', err);
+        return res.status(500).json({ message: 'Internal Server Error' });
+      }
+      total_students = studentResult[0].total_students;
+
+      db.query(
+        "SELECT COUNT(*) AS total_faculty FROM users WHERE role = 'faculty'",
+        (err, facultyResult) => {
+          if (err) {
+            console.error('Error fetching faculty count:', err);
+            return res.status(500).json({ message: 'Internal Server Error' });
+          }
+          total_faculty = facultyResult[0].total_faculty;
+
+          db.query(
+            "SELECT COUNT(*) AS total_courses FROM courses",
+            (err, courseResult) => {
+              if (err) {
+                console.error('Error fetching course count:', err);
+                return res.status(500).json({ message: 'Internal Server Error' });
+              }
+              total_courses = courseResult[0].total_courses;
+
+              res.status(200).json({
+                total_students,
+                total_faculty,
+                total_courses,
+              });
+            }
+          );
+        }
+      );
+    }
+  );
+};

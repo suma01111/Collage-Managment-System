@@ -15,18 +15,18 @@ export const Sidebar = ({ role }) => {
         ]
       case 'faculty':
         return [
-          { path: '/faculty/dashboard', label: 'Dashboard' },
+          // { path: '/faculty/dashboard', label: 'Dashboard' },
           { path: '/faculty/profile', label: 'Profile' },
           { path: '/faculty/manage-results', label: 'Manage Results' },
           { path: '/faculty/manage-courses', label: 'Assigned Courses' },
-          { path: '/faculty/manage-timetable', label: 'Manage Timetable' }
+          // { path: '/faculty/manage-timetable', label: 'Manage Timetable' }
         ]
       case 'admin':
         return [
           { path: '/admin/dashboard', label: 'Dashboard' },
           { path: '/admin/manage-users', label: 'Manage Users' },
-          { path: '/admin/manage-faculty', label: 'Manage Faculty' },
-          { path: '/admin/manage-students', label: 'Manage Students' },
+          // { path: '/admin/manage-faculty', label: 'Manage Faculty' },
+          // { path: '/admin/manage-students', label: 'Manage Students' },
           { path: '/admin/manage-courses', label: 'Manage Courses' }
         ]
       default:
@@ -37,12 +37,12 @@ export const Sidebar = ({ role }) => {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <img 
+        {/* <img 
           src="/placeholder-avatar.png" 
           alt="User Avatar" 
           className="user-avatar"
-        />
-        <h3>{role.charAt(0).toUpperCase() + role.slice(1)} Dashboard</h3>
+        /> */}
+        {/* <h3>{role.charAt(0).toUpperCase() + role.slice(1)} Dashboard</h3> */}
       </div>
       <nav className="sidebar-nav">
         {getMenuItems().map((item) => (

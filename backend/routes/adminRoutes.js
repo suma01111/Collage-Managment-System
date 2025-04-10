@@ -1,5 +1,5 @@
 import express from 'express'
-import { getUsers, updateUserRole, updateUserStatus } from '../controllers/adminController.js'
+import { getUsers, overallDetails, updateUserRole, updateUserStatus } from '../controllers/adminController.js'
 import { AddCourse, deleteCourse, getCourses, updateCourse } from '../controllers/Courses.js'
 import { getFacultyForCourses } from '../controllers/facultyController.js'
 import { authenticateUser } from '../middleware/auth.js'
@@ -18,4 +18,5 @@ router.get('/courses', getCourses);
 router.post('/courses/addCourse', AddCourse);
 router.put("/courses/updatecourse/:course_id", updateCourse);
 router.delete("/courses/deletecourse/:course_id", deleteCourse);
+router.get('/dashboard', overallDetails);
 export default router 
