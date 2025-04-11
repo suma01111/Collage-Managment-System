@@ -29,7 +29,7 @@ export const AddCourse = (req, res) => {
                 );
 
                 db.query(
-                    'INSERT INTO faculty_department (Faculty_ID, Department_id) VALUES (?, ?)',
+                    'INSERT IGNORE INTO faculty_department (Faculty_ID, Department_id) VALUES (?, ?)',
                     [Faculty_ID, department_id],
                     (error) => {
                         if (error) {
@@ -48,7 +48,6 @@ export const AddCourse = (req, res) => {
     );
 };
 
-// Get Courses
 export const getCourses = (req, res) => {
     const LeftJoin = `
         SELECT 
@@ -66,7 +65,6 @@ export const getCourses = (req, res) => {
     });
 };
 
-// Update Course
 export const updateCourse = (req, res) => {
     const { course_id } = req.params;
     const { course_name, department_id, semester_id, Faculty_ID } = req.body;
@@ -99,8 +97,6 @@ export const updateCourse = (req, res) => {
     );
 };
 
-
-
 export const deleteCourse = (req, res) => {
     const { course_id } = req.params;
 
@@ -112,4 +108,5 @@ export const deleteCourse = (req, res) => {
             res.status(200).json({ message: "Course deleted successfully" });
         });
     });
-};
+}
+

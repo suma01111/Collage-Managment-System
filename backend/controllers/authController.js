@@ -106,7 +106,6 @@ export const login = async (req, res) => {
   }
 }
 
-
 export const logout = (req, res) => {
   const { sessionId } = req.cookies
 

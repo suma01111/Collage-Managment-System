@@ -74,7 +74,6 @@ export const getFacultyForCourses = (req, res) => {
     )
 }
 
-// render this courses on the faculty courses
 export const facutlyAssignCourses = async (req, res) => {
     const { facultyId } = req.params;
     const query = `

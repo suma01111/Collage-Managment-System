@@ -1,29 +1,5 @@
 import db from '../config/db.js';
 
-// Student Registration (Existing)
-// export const registerStudent = (req, res) => {
-//   console.log("Received data:", req.body); // Debugging
-
-
-//   const { Student_ID, full_name, DOB, Phone_No, Email, Address, Department, Current_semester, Enrollment_Year } = req.body;
-
-//   if (!Student_ID || !full_name || !DOB || !Phone_No || !Email || !Address || !Department || !Current_semester || !Enrollment_Year) {
-//     return res.status(400).json({ error: "All fields are required" });
-//   }
-
-//   db.query(
-//     "INSERT INTO student_info (Student_ID, full_name, DOB, Phone_No, Email, Address, Department, Current_semester, Enrollment_Year) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-//     [Student_ID, full_name, DOB, Phone_No, Email, Address, Department, Current_semester, Enrollment_Year],
-//     (error) => {
-//       if (error) {
-//         console.error("Student registration error:", error);
-//         return res.status(500).json({ error: "Internal server error" });
-//       }
-//       res.status(201).json({ message: "Student registered successfully" });
-//     }
-//   );
-// };
-
 export const registerStudent = (req, res) => {
   console.log("Received data:", req.body); // Debugging
 
@@ -49,7 +25,6 @@ export const registerStudent = (req, res) => {
   );
 };
 
-// Function to enroll student in relevant courses
 const enrollStudentInCourses = (Student_ID, Department, Current_semester, res) => {
  
     const query = `
@@ -74,8 +49,6 @@ const enrollStudentInCourses = (Student_ID, Department, Current_semester, res) =
   });
 };
 
-
-// Fetch Student Profile (New)
 export const getStudentProfile = (req, res) => {
   const userEmail = req.user.email;
 
